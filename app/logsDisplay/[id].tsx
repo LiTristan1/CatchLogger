@@ -3,19 +3,10 @@ import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Store/Store';
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryAxis,
-  VictoryTheme,
-  VictoryTooltip
-} from 'victory-native';
 
+import Bar from '../../components/bar'
 export default function LogDisplay() {
-  const navigation = useNavigation();
-  const { id } = useLocalSearchParams();
   const log = useSelector((state: RootState) => state.currLog.log);
-
   const exampleData = [
     { x: 'Jan', y: 1 },
     { x: 'Feb', y: 2 },
@@ -42,14 +33,16 @@ export default function LogDisplay() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {log ? (
           <>
+           {/**display image of catcch */}
             <Image
               style={styles.image}
-              source={require('../../images/CardDevImage.jpg')}
+              source={{uri:log.catch.image}}
               resizeMode="cover"
             />
             <Text style={styles.header}>Summary</Text>
 
             <View style={styles.cardContainer}>
+              {/**display catch specific information */}
               <View style={styles.cardDark}>
                 <Text style={styles.cardTextLight}>Species: {log.catch.name}</Text>
                 <Text style={styles.cardTextLight}>Weight: {log.catch.weight} lbs</Text>
@@ -58,6 +51,7 @@ export default function LogDisplay() {
               </View>
 
               <View style={styles.cardLight}>
+                {/**display location specific information */}
                 <Text style={styles.cardTextDark}>Location: {log.location.place}</Text>
                 <Text style={styles.cardTextDark}>Date: {log.date}</Text>
                 <Text style={styles.cardTextDark}>Time: {log.catch.time}</Text>
@@ -68,26 +62,13 @@ export default function LogDisplay() {
               </View>
             </View>
 
+            {/**display graph showing catch frequency vs month */}
             <Text style={styles.subHeader}>Number of Catches per Month</Text>
-            <VictoryChart 
-                theme={VictoryTheme.material} 
-                domainPadding={10}
-                
-            >
-              <VictoryAxis
-                tickValues={exampleData.map(d => d.x)}
-                tickFormat={exampleData.map(d => d.x)}
-                style={{ tickLabels: { fontSize: 10 } }}
-              />
-              <VictoryAxis dependentAxis />
-              <VictoryBar 
-              labels={({ datum }) => `${datum.y}`}
-              data={exampleData} x="x" y="y" style={{ data: { fill: '#4B5563' } }} animate/>
-            </VictoryChart>
+            <Bar data = {exampleData}></Bar>
 
-            <Text style={styles.footerText}>Info for ID: {id}</Text>
           </>
         ) : (
+           
           <Text style={styles.loading}>Loading...</Text>
         )}
       </ScrollView>

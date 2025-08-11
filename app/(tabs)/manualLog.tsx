@@ -1,12 +1,12 @@
-import {Text, View, TextInput,Pressable} from 'react-native';
-import {useEffect} from 'react';
-import {useRouter} from 'expo-router';
+
 import Species from '../logProcess/Species';
 
 
+//starting point of creating a new log
 export default function ManualLog(){
-    const router = useRouter();
 
+    
+    //return the page to log species specific information
     return(
         <Species/>
     )

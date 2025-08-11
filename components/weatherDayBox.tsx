@@ -1,5 +1,4 @@
 import { View, Text } from 'react-native';
-import { useState } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
@@ -14,6 +13,7 @@ type Props = {
   recommended: string;
 };
 
+//UI component to give synopsis of weather for a specific day within the next 2 weeks
 export default function WeatherDayBox({
   weekDay,
   minVal,
@@ -24,6 +24,7 @@ export default function WeatherDayBox({
   rainDepth,
   recommended,
 }: Props) {
+  //image displayed based on weataher its sunny or cloudly of windy
   const renderIcon = () => {
     if (isSunny && isRainy) {
       return <FontAwesome5 name="cloud-sun-rain" size={32} color="#2563EB" />;
@@ -38,6 +39,7 @@ export default function WeatherDayBox({
 
   return (
     <View className="w-11/12 max-w-sm bg-white rounded-2xl p-4 mb-4 shadow-md items-center space-y-3">
+      {/**display day of week */}
       <Text className="text-lg font-semibold text-blue-800">{weekDay}</Text>
 
       {/* Weather Icon */}

@@ -1,7 +1,6 @@
 import {View,Text,Image,Pressable} from 'react-native';
 import {useSelector,useDispatch} from 'react-redux';
 import {AppDispatch,RootState} from '../Store/Store';
-import {useEffect} from 'react';
 import {useRouter} from 'expo-router';
 import { setCatchImage } from '../Store/EntrySlice';
 export default function ConfirmPhoto(){
@@ -9,13 +8,11 @@ export default function ConfirmPhoto(){
     const dispatch = useDispatch<AppDispatch>();
     //get the image lateset captured by the camera
     const photoURI = useSelector((state: RootState) => state.camera.latestPhotoUri);
-    useEffect(() => {
-        console.log("Photo URI: ", photoURI);
-    },[photoURI])
-
+ 
     function returnBack(){
         //store the image in the log
         dispatch(setCatchImage(photoURI));
+        //go back to main page
         router.push('/(tabs)/manualLog');
     }
     return(

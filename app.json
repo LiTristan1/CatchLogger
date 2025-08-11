@@ -53,6 +53,12 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Catch Logger to use your location"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app needs access to your photos"
+        }
       ]
     ],
     "experiments": {

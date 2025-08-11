@@ -2,16 +2,18 @@ import { View, Text, ScrollView, Image, StyleSheet,Pressable } from 'react-nativ
 import { useSelector } from 'react-redux';
 import { RootState } from '../Store/Store';
 import { LinearGradient } from 'expo-linear-gradient';
-import { setWaterClarity } from '../Store/EntrySlice';
+import * as SecureStore from 'expo-secure-store';
 export default function Summary() {
   const id = useSelector((state: RootState) => state.entry.id);
+  const owner = useSelector((state: RootState) => state.login.username);
   const date = useSelector((state: RootState) => state.entry.date);
 
   // Location
   const place = useSelector((state: RootState) => state.entry.location.place);
   const placeObj = useSelector((state: RootState) => state.entry.location.placeObj);
   const system = useSelector((state: RootState) => state.entry.location.system);
-
+  const latitude = useSelector((state: RootState) => state.entry.location.latitude);
+  const longitude = useSelector((state: RootState) => state.entry.location.longitude)
   // Catch
   const catchName = useSelector((state: RootState) => state.entry.catch.name);
   const catchWeight = useSelector((state: RootState) => state.entry.catch.weight);
@@ -28,14 +30,63 @@ export default function Summary() {
   const waterTemp = useSelector((state: RootState) => state.entry.weather.waterTemp);
   const waterClarity = useSelector((state: RootState) => state.entry.weather.waterClarity);
   const windSpeed = useSelector((state: RootState) => state.entry.weather.windSpeed);
+  const windDirection = useSelector((state: RootState) => state.entry.weather.windDirection)
   const barometric = useSelector((state: RootState) => state.entry.weather.barometric);
   const cloudCover = useSelector((state: RootState) => state.entry.weather.cloudCover);
   const precipitation = useSelector((state: RootState) => state.entry.weather.precipitation);
   const moonPhase = useSelector((state: RootState) => state.entry.weather.moonPhase);
+  //url for backend (store in .env file later on)
+  const URL = "http://192.168.2.18:3500/log"
+  async function submit(){
+    //post this to backend
+    const token = await SecureStore.getItemAsync('accessToken');
+    //give all data to backend
+    await fetch(URL, {
+      method: "POST",
+      headers: {
+        'authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        owner: owner,
+        date: date,
+        location: {
+        place: place,
+        placeObj: placeObj,
+        latitude: latitude,
+        longitude: longitude,
+        system: system
+      },
+      catch: {
+        name: catchName,
+        weight: catchWeight,
+        length: catchLength,
+        time: catchTime,
+        image: catchImage
+      },
+      gear: {
+        liveOrArtificial: gearType,
+        name: gearName,
+      },
+      weather: {
+        airTemp: airTemp,
+        waterTemp: waterTemp,
+        waterClarity: waterClarity,
+        windSpeed: windSpeed,
+        windDirection: windDirection,
+        barometric: barometric,
+        cloudCover: cloudCover,
+        precipitation: precipitation,
+        moonPhase: moonPhase,
+      },
+      })
+    })
 
-  function submit(){
     console.log("Submitting");
+    console.log(owner);
   }
+
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
         <LinearGradient
@@ -48,7 +99,7 @@ export default function Summary() {
                 
                         />
       <View style = {styles.section}>
-
+        {/**if image exists display it or indicate there is no image */}
         {catchImage? (
           <Image
             source={{ uri: catchImage }}
@@ -62,6 +113,7 @@ export default function Summary() {
         }
       </View>
       <View style={styles.section}>
+        {/**display catch specific info */}
         <Text style={styles.sectionTitle}>Catch</Text>
         
         <Text style={styles.text}>Species: {catchName}</Text>
@@ -72,11 +124,12 @@ export default function Summary() {
       </View>
 
       <View style={styles.section}>
+        {/**display location info */}
         <Text style={styles.sectionTitle}>Location</Text>
         <Text style={styles.text}>Place: {place}</Text>
         <Text style={styles.text}>System: {system? system: "Not Specified"}</Text>
       </View>
-
+        {/**display gear info */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Gear</Text>
         <Text style={styles.text}>Type: {gearType ? 'Live' : 'Artificial'}</Text>
@@ -84,18 +137,20 @@ export default function Summary() {
       </View>
 
       <View style={styles.section}>
+        {/**display weather info */}
         <Text style={styles.sectionTitle}>Weather</Text>
         <Text style={styles.text}>Air Temp: {airTemp}°C</Text>
         <Text style={styles.text}>Water Temp: {waterTemp}°C</Text>
         <Text style = {styles.text}>Water Clarity: {waterClarity}</Text>
         <Text style={styles.text}>Wind Speed: {windSpeed} km/h</Text>
+        <Text style = {styles.text}>Wind Direction: {windDirection}°</Text>
         <Text style={styles.text}>Barometric: {barometric} hPa</Text>
         <Text style={styles.text}>Cloud Cover: {cloudCover ? cloudCover: "Not Specified"}</Text>
         <Text style={styles.text}>Precipitation: {precipitation} mm</Text>
         <Text style={styles.text}>Moon Phase: {moonPhase ? moonPhase: 'Not Specified'}</Text>
       </View>
-
-      <Pressable style = {styles.button}><Text>Submit</Text></Pressable>
+        {/**button to submit log */}
+      <Pressable style = {styles.button} onPress = {submit}><Text>Submit</Text></Pressable>
     </ScrollView>
   );
 }

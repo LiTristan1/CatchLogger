@@ -14,11 +14,8 @@ export default function Camera(){
     const [permissions,requestPermissions] = useCameraPermissions();
     const ref = useRef<CameraView>(null);
     const [mode,setMode] = useState<CameraMode>("picture");
-    const [recording, setRecording] = useState<boolean>(false);
-
     const dispatch = useDispatch<AppDispatch>();
     
-    const photoUri = useSelector((state: RootState) => state.camera.latestPhotoUri);
     const facing = useSelector((state: RootState) => state.camera.facing);
     const router = useRouter();
     //if camera not enabled then dont give take picture option
@@ -66,14 +63,16 @@ export default function Camera(){
             responsiveOrientationWhenOrientationLocked
           >
             <View className = 'flex-row justify-between items-center absolute bottom-5 bg-transparent w-full px-10'>
-
+            {/**option to cancel */}
             <TouchableOpacity>
               <Pressable onPress = {cancel}><Text className = 'text-white text-lg'>Cancel</Text></Pressable>
             </TouchableOpacity>
+            {/**white button to take a photo */}
             <TouchableOpacity className="justify-center items-center">
               <Pressable className="rounded-full bg-white w-20 h-20 border-4 border-grey" onPress = {takePhoto}/>
             </TouchableOpacity>
 
+            {/**button to let user reverse camera view */}
             <TouchableOpacity className = ''>
               <Pressable onPress = {toggleCameraFacing} ><Ionicons name="camera-reverse" size={48} color="white" /></Pressable>
             </TouchableOpacity>

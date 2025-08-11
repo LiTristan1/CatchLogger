@@ -6,6 +6,7 @@ const {Navigator} = createMaterialTopTabNavigator();
 const TopTabs = withLayoutContext(Navigator);
 
 export default function Layout(){
+    //layout for specific log informattion
     return(
         <TopTabs
         >

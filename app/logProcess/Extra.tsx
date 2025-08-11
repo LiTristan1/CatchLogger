@@ -40,6 +40,7 @@ export default function Extra() {
   },[])
 
   function selectTime(e: Date){
+    //given the date object we turn it into a time with hh:mm format
     setTime(e.toLocaleTimeString([],{
       hour: '2-digit',
       minute: '2-digit',
@@ -65,6 +66,7 @@ export default function Extra() {
     hideDatePicker();
   }
 
+  //utility functions to show or hide the date picker
   function hideDatePicker(){
     setDateIsVisible(false);
   }
@@ -72,6 +74,7 @@ export default function Extra() {
     setDateIsVisible(true);
   }
 
+  //store data in store and go on to log weather info
   function next(){
     dispatch(setCatchTime(time));
     dispatch(setDate(dateVal));
@@ -83,7 +86,7 @@ export default function Extra() {
         
         
        
-        
+    {/**title */}
     <View className = 'w-full justify-center items-center gap-8'>
         <Text className="text-lg mb-4">Catch Information</Text>
               <LinearGradient
@@ -94,7 +97,7 @@ export default function Extra() {
         end={{ x: 0.5, y: 1}}
         
       />
-
+      {/**picker to select weight */}
       <View className = 'flex-row w-full justify-center relative top-16'>
         <SizePicker
           selectedValue = {weight}
@@ -103,6 +106,7 @@ export default function Extra() {
           unit = {"lb"}
           size = {150}
         />
+        {/**picker for weight unit */}
         <SizePicker
           selectedValue = {oz}
           onValueChange = {setOz}
@@ -114,6 +118,7 @@ export default function Extra() {
         
         
         <View className = 'relative bottom-10 justify-center w-full items-center'>
+        {/**picker for length */}
         <SizePicker
           selectedValue = {length}
           onValueChange = {setLength}
@@ -125,6 +130,7 @@ export default function Extra() {
         </SizePicker>
         </View>
         <View className = 'relative w-full justify-center items-center bottom-24 gap-10'>
+        {/**select time modal */}
         <DateTimePickerModal
           onConfirm = {selectTime}
           onCancel = {hideTimePicker}
@@ -132,24 +138,22 @@ export default function Extra() {
           mode = "time"
          
         />
-
-        
-
+        {/**modal to let user pick date */}
         <DateTimePickerModal
           onConfirm = {selectDate}
           onCancel = {hideDatePicker}
           isVisible = {dateIsVisible}
           mode = "date"
         />
-
+      {/**button to let user pick time */}
       <Pressable onPress={showTimePicker} className="w-3/4 max-w-[400px] px-4 py-4 bg-white rounded-lg border-2 border-white">
   <Text className="text-lg text-black">{time ?? 'Select Time'}</Text>
 </Pressable>
-
+{/**button to let user pick date */}
 <Pressable onPress={showDatePicker} className="w-3/4 max-w-[400px] px-4 py-4 bg-white rounded-lg border-2 border-white">
   <Text className="text-lg text-black">{dateVal ?? 'Select Date'}</Text>
 </Pressable>
-
+{/**let user input bait used */}
 <TextInput
   placeholder="Bait"
   placeholderTextColor="black"

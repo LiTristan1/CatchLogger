@@ -1,14 +1,19 @@
 import {createSlice,PayloadAction} from '@reduxjs/toolkit';
 import { Log } from './LogSlice';
 
+//store for new entry
 
+//define initial entry values
 const initialState: Log = {
     id: -1,
+    owner: "",
     date: null,
     location: {
         place: null,
         placeObj: null,
         system: null,
+        latitude:  0,
+        longitude: 0
 
     },
     catch: {
@@ -27,6 +32,7 @@ const initialState: Log = {
         waterTemp: null,
         waterClarity: null,
         windSpeed: null,
+        windDirection: null,
         barometric: null,
         cloudCover: null,
         precipitation: null,
@@ -39,6 +45,7 @@ const EntrySlice = createSlice({
     name: 'Entry',
     initialState,
     reducers: {
+    //define reducers to change values of state variable
     setID(state, action: PayloadAction<number | string>) {
       state.id = action.payload;
     },
@@ -50,6 +57,12 @@ const EntrySlice = createSlice({
     },
     setPlaceObj(state,action: PayloadAction<object | null>){
         state.location.placeObj = action.payload;
+    },
+    setLatitude(state, action: PayloadAction<Number>){
+      state.location.latitude = action.payload;
+    },
+    setLongitude(state, action: PayloadAction<Number>){
+      state.location.longitude = action.payload;
     },
     setSystem(state, action: PayloadAction<string | null>) {
       state.location.system = action.payload;
@@ -87,6 +100,9 @@ const EntrySlice = createSlice({
     setWindSpeed(state, action: PayloadAction<number | null>) {
       state.weather.windSpeed = action.payload;
     },
+    setWindDirection(state,action: PayloadAction<number | null>){
+      state.weather.windDirection = action.payload;
+    },
     setBarometric(state, action: PayloadAction<number | null>) {
       state.weather.barometric = action.payload;
     },
@@ -102,8 +118,8 @@ const EntrySlice = createSlice({
     }
 })
 
-export const {setID,setDate,setPlace,setPlaceObj,setSystem,setCatchName,
-    setCatchWeight,setCatchLength,setCatchTime,setCatchImage,setGearLiveOrArtificial,setGearName,setAirTemp,setWaterTemp,setWaterClarity,setWindSpeed,setBarometric,setCloudCover,setPrecipitation,setMoonPhase} = EntrySlice.actions;
+export const {setID,setDate,setPlace,setPlaceObj,setLatitude,setLongitude,setSystem,setCatchName,
+    setCatchWeight,setCatchLength,setCatchTime,setCatchImage,setGearLiveOrArtificial,setGearName,setAirTemp,setWaterTemp,setWaterClarity,setWindSpeed,setWindDirection,setBarometric,setCloudCover,setPrecipitation,setMoonPhase} = EntrySlice.actions;
 export default EntrySlice.reducer;
 
 

@@ -1,12 +1,16 @@
 import {createSlice,PayloadAction} from '@reduxjs/toolkit';
-
+//store the stores all logs pertaining to the user
+//define log type
 export type Log = {
     id:number | string,
+    owner: string,
     date: string | null,
     location: {
         place: string | null,
         placeObj: object | null,
-        system: string | null
+        system: string | null,
+        latitude: Number,
+        longitude: Number
     }
     catch: {
         name: string | null,
@@ -24,6 +28,8 @@ export type Log = {
         waterTemp: number | null,
         waterClarity: string | null,
         windSpeed: number | null,
+        windDirection: number| null,
+
         barometric: number | null,
         cloudCover: string | null,
         precipitation: number | null,
@@ -31,7 +37,7 @@ export type Log = {
 
     }
 }
-//Define ddata type to be array of logs
+//Define data type to be array of logs
 interface data  {
     logs: Log[],
 }
@@ -45,6 +51,7 @@ const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
+        // reducer to change logs 
         setLogs(state, action: PayloadAction<Log[]>){
             state.logs = action.payload;
         }

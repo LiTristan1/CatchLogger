@@ -5,8 +5,11 @@ import WeatherBox from '@/components/weatherBox';
 import WeatherDayBox from '@/components/weatherDayBox';
 import { useSelector } from 'react-redux'
 export default function Recommendation(){
+    //dummy array for weekly weather inffo
     const daysOfWeek = ["Sunday","Tuesday","Wednesday","Thursday","Friday","Saturday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    //stores arra of 24 hours starting from current hour
     const [time,setTime] = useState<number[]>([]);
+    
     const [dayOfWeekIndex,setDayOfWeekIndex] = useState<number>(0);
     useEffect(() => {
         //get curr date time
@@ -71,6 +74,7 @@ export default function Recommendation(){
                 {
                     daysOfWeek.map((val,index) => {
                         return(
+
                             <WeatherDayBox
 
                                 key = {index}

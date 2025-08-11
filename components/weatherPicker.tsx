@@ -3,6 +3,11 @@ import { Picker } from "@react-native-picker/picker";
 
 const Item: any = Picker.Item;
 
+//label: what the picker is for
+//selectedValue: is the value returned by picer
+//onValueChange:  local state setter passed from parent file to change its
+//value: based on value selected in picker
+//options: gives the options the picker displays
 type Props <T = string | number> = {
     label: string,
     selectedValue: T,
@@ -10,6 +15,7 @@ type Props <T = string | number> = {
     options: T[],
     unit?: string
 }
+//UI for picker for weather.tsx display in logProcess folder
 export default function WeatherPicker<T extends string | number>({
     label,
     selectedValue,
@@ -20,13 +26,14 @@ export default function WeatherPicker<T extends string | number>({
     return(
         <View className = 'justify-center items-center'>
             <Text style = {styles.subheader}>{label}</Text>
-
+            
             <Picker
                 selectedValue = {selectedValue}
                 onValueChange = {(v) => onValueChange(v)}
                 accessibilityLabel="Styled Picker Accessibility Label"
                 style = {styles.picker}
             >
+                {/**give an item for each option */}
                 {
                     options.map((val,index) => {
                         return(

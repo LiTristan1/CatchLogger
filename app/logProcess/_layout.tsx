@@ -1,5 +1,7 @@
 import {Stack} from 'expo-router';
 
+//layout page for creating a new log
+
 export default function Layout(){
     return (
         <Stack>
