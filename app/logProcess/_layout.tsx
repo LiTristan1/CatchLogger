@@ -3,6 +3,7 @@ import {Stack} from 'expo-router';
 //layout page for creating a new log
 
 export default function Layout(){
+    //stack for the log process
     return (
         <Stack>
             <Stack.Screen 

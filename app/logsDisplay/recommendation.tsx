@@ -23,6 +23,7 @@ export default function Recommendation(){
         setTime(timeArray);
     },[])
     return(
+        
         <ScrollView
             contentContainerStyle = {{
                 justifyContent: 'center',
@@ -38,7 +39,7 @@ export default function Recommendation(){
             />
             
             <Text className = "text-2xl font-bold text-blue-800">Today</Text>
-
+            {/**scroll view for weather for next 24 hours */}
             <ScrollView
                 horizontal = {true}
                 contentContainerStyle = {{  
@@ -65,11 +66,12 @@ export default function Recommendation(){
                 
 
             </ScrollView>
+            {/**title for data for next two week forecast */}
             <Text className="text-2xl font-bold text-blue-800">Recommendation</Text>
             <Text className="text-xl font-semibold text-gray-700">Two Week Forecast</Text>
             <View className = 'items-center w-full mt-4 space-y-4'>
 
-
+                {/**display weather data for next 2 weeks */}
                 
                 {
                     daysOfWeek.map((val,index) => {

@@ -7,14 +7,23 @@ import {RootState} from '../Store/Store';
 import { setLogs } from '../Store/LogSlice';
 import Card from '../../components/card';
 import * as SecureStore from 'expo-secure-store';
+
+
+//displays all logs by the user
 export default function Logs(){
+    //backend call url (move to .env later)
     const URL = "http://192.168.2.18:3500/log"
+
+    //controls the number of logs shown at onoce to prevent flooding of screen
     const [shown,setShown] = useState<number>(2);
     const dispatch = useDispatch();
     useFetch();
+
+    //get all the logs from the user
     const data = useSelector((state : RootState) =>state.data.logs);
     useEffect(() => {
       
+      //
       async function fetchLogs(){
         const token = await SecureStore.getItemAsync("accessToken");
         try{
@@ -58,8 +67,10 @@ export default function Logs(){
 
 const displayedObjects = data.slice(0,shown);
     return(
+
         data ? (
         <ScrollView contentContainerStyle = {styles.container}>
+            {/**display each log with a logbox component in components/card */}
             {
                 displayedObjects.map((obj,index) => {
                     return(

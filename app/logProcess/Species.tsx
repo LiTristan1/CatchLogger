@@ -19,6 +19,7 @@ export default function Species(){
     const dispatch = useDispatch<AppDispatch>();
     const photoURI = useSelector((state: RootState) => state.camera.latestPhotoUri);
 
+    //array of all possible freshwather species (needs to be updated)
     const popularList = [
         "Largemouth Bass",
         "Smallmouth Bass",
@@ -50,22 +51,25 @@ export default function Species(){
         "Cuttthroat Trout",
     ]
 
-    const baitFish = [
-        "Minnow"
-    ]
+    
+
     const Item: any = Picker.Item;
     
     function next(){
-        
+        //set current information and move on to location info
         dispatch(setCatchImage(photoURI))
         dispatch(setCatchName(catchVal))
         router.push('/logProcess/Location');
     }
+
+    //function to set theh camera view
     async function handleTakingPicture(){
         setIsTakingPicture(true);
     }
 
     async function selectPhoto(){
+
+        {/**get picture from user device library */}
         const perms = await ImagePicker.requestCameraPermissionsAsync();
 
         if(perms.status !== 'granted'){
@@ -105,7 +109,9 @@ export default function Species(){
                     end={{ x: 0.5, y: 1}}
                 />
             <Text className = 'text-lg text-semibold text-white'>Enter Name of Species</Text>
-
+            {/**
+             * picker for the catch species
+             */}
             <Picker
                 selectedValue={catchVal}
                 onValueChange = {(v) => setCatchVal(v)}
@@ -124,7 +130,9 @@ export default function Species(){
                         )
                     })
                 }
-
+                {
+                    /**seperator for trout and salmon logging */
+                }
                 <Item
                     label = "--- Trout & Salmon ---"
                     value = ""
@@ -146,8 +154,9 @@ export default function Species(){
             </Picker>
 
             
-        
+            
             <Pressable onPress = {handleTakingPicture} className = 'rounded-lg border-2 bg-white border-black w-4/5 h-48 justify-center items-center bottom-14'>
+                {/**display image if already got image */}
                 {
                     photoURI? (
                         <Image
@@ -161,7 +170,7 @@ export default function Species(){
                 }
                
             </Pressable>
-            
+            {/** option to upload an image instead */ }
             <Pressable className = 'justfy-center items-center bottom-10' onPress = {selectPhoto}><Text>Upload Image</Text></Pressable>
             <Pressable className="border border-white px-6 py-3 rounded-xl mt-2 active:opacity-80" onPress = {next}><Text>Next</Text></Pressable>
 

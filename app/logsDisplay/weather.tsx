@@ -17,6 +17,8 @@ export default function Weather() {
   //get current log info
   const log = useSelector((state: RootState) => state.currLog.log);
   useEffect(() => {
+
+    //get species specific info from backend
     console.log("Inside useEffect")
     async function getFishData(){
       try{

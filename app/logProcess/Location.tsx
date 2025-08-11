@@ -202,6 +202,7 @@ const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${
             }
 
         <Pressable onPress = {next} className="absolute bottom-10 self-center w-1/2 h-12 justify-center items-center z-10 bg-black rounded-xl">
+  {/**button to go to next page  */}
   <Text className="text-white text-lg">Next</Text>
 </Pressable>
 
