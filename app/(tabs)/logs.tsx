@@ -1,5 +1,5 @@
 import {Text,Pressable,ScrollView,StyleSheet} from 'react-native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import {useState,useEffect} from 'react';
 import useFetch from '../../hooks/useFetch';
 import {useSelector, useDispatch} from 'react-redux';
@@ -70,6 +70,13 @@ const displayedObjects = data.slice(0,shown);
 
         data ? (
         <ScrollView contentContainerStyle = {styles.container}>
+          <LinearGradient
+                                // Background Linear Gradient
+                                colors={['rgba(0, 180, 255, 0.6)', 'transparent']}
+                                style = {styles.background}
+                                start={{ x: 0.5, y: 0 }}
+                                end={{ x: 0.5, y: 1}}
+                            />
             {/**display each log with a logbox component in components/card */}
             {
                 displayedObjects.map((obj,index) => {
@@ -79,6 +86,7 @@ const displayedObjects = data.slice(0,shown);
                     })
             }
             <Pressable className = 'border-2 border-black' onPress = {showMore}><Text>Show More</Text></Pressable>
+            
         </ScrollView>
     ) : (
         <Text>Loading...</Text>
@@ -94,5 +102,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 24,
         paddingVertical: 24
-    }
+    },
+    background:{
+        position: 'absolute',
+        flex: 1,
+        left: 0,
+        right: 0,
+        top: 0,
+        height: 1000,
+        justifyContent: "center",
+        paddingHorizontal: 16
+    },
+
 });

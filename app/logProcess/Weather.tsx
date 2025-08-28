@@ -33,7 +33,7 @@ const windDirectionRange = Array.from({length: 361}, (_,i) => i)
 const cloudCoverOps = ["Clear/Sunny", "Partly Cloudly", "Mostly Cloudly","Overcast","Foggy/Low Visibility"]
 const moonStageOps = ["New Moon", "Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon", "Waning Gibbous", "Third Quarter","Waning Crescent"]
     
-const waterClarityValOps = ["Crystal Clear (>10ft)","Clear (5-10ft)","Slightly Muddy (3 to 5ft)", "Muddy (<3ft)"]
+const waterClarityValOps = ["Crystal Clear (>10ft)","Clear (5-10ft)","Slightly Muddy (3-5ft)", "Muddy (<3ft)"]
     const[airTempVal,setAirTempVal] = useState<number>(-50);
     const[waterTempVal,setWaterTempVal] = useState<number>(-50);
     const[windSpeedVal,setWindSpeedVal] = useState<number>(0);
