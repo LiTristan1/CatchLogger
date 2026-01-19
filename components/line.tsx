@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { useRef} from 'react';
-import { ScrollView } from 'react-native';
+import { useState} from 'react';
 import {
-  VictoryChart,
   VictoryLine,
+  VictoryChart,
   VictoryTheme,
-  VictoryScatter,
-  VictoryAxis,
-  VictoryTooltip,
-  VictoryVoronoiContainer
-} from 'victory-native';
+  VictoryAxis
+} from 'victory-native'
 
-export type point = {
+import {ScrollView} from 'react-native'
+export type points = {
   xAxis: number[];
   yAxis: number[];
 };
@@ -20,86 +17,69 @@ export type point = {
 type Props = {
   xLabel: string;
   yLabel: string;
-  data: point | null;
+  data: points | null;
 };
 
-const scrollRef = useRef(null);
+
 
 
 export default function LineGraph({ xLabel, yLabel, data }: Props) {
-  if (!data || data.xAxis.length !== data.yAxis.length) return null;
-
-  // Combine xAxis and yAxis into [{ x, y }, ...]
-  const chartData = data.xAxis.map((x, i) => ({
-    x,
-    y: data.yAxis[i],
-  }));
-
-  // Calculate xMin and yMax
-  const xMin = Math.min(...data.xAxis);
-  const xMax = Math.max(...data.xAxis);
-  const yMin = 0;
-  const yMax = Math.max(...data.yAxis);
-
-  // Generate tick labels
-  function getTicks(start: number, end: number, interval: number): number[] {
-    const ticks = [];
-    for (let i = start; i <= end; i += interval) {
-      ticks.push(Math.round(i));
-    }
-    return ticks;
+  let yMax = 100;
+  let xMax = 100;
+  let xMin = 0;
+  if(data != null){
+     yMax = Math.max(...data.yAxis)
+     xMax = Math.max(...data.xAxis)
+     xMin = Math.min(...data.xAxis)
   }
 
-  const xTickLabels = getTicks(xMin, xMax, 10);
-  const yTickLabels = getTicks(yMin, yMax, Math.max(1, yMax / 10));
+  let yTickIntervals: number[] = []
+  let index = 0;
+  for(let i = 0; i < yMax; i += yMax/5){
+    yTickIntervals[index] = i;
+    index++;
+  }
 
-  return (
-    <ScrollView  horizontal showsVerticalScrollIndicator = {true} ref = {scrollRef}>
-      <VictoryChart theme={VictoryTheme.material} domainPadding={20} width = {500}containerComponent={
-    <VictoryVoronoiContainer
-      labels={({ datum }) => `(${datum.x}, ${datum.y})`}
-      labelComponent={
-        <VictoryTooltip
-          flyoutStyle={{ fill: '#E0F2FE' }}
-          style={{ fontSize: 10 }}
-        />
-      }
-    />
-  }>
+  let xTickIntervals: number[] = [];
+  let indexX = 0;
+  for(let i = xMin; i < xMax; i += xMax/5){
+    xTickIntervals[indexX] = i;
+    indexX++;
+  }
+  return(
+    <ScrollView horizontal = {true} style = {{
+      maxHeight: 300,
+      padding: 10
+    }}>
+      <VictoryChart domainPadding = {20} animate  padding={{ top: 20, bottom: 60, left: 70, right: 20 }} >
         <VictoryAxis
-          label={xLabel}
-          tickValues={xTickLabels}
-          style={{
-            axisLabel: { padding: 30, fontSize: 14 },
-           
-          }}
+        label = {"XAxis"}
+          tickValues = {
+            xTickIntervals
+          }
+          tickFormat = {(tick) => `${tick}`}
+        
         />
-        <VictoryAxis
-          dependentAxis
-          label={yLabel}
-          tickValues={yTickLabels}
-          style={{
-            axisLabel: { padding: 35, fontSize: 14 },
-          }}
-        />
-
         <VictoryLine
-          animate
-          data={chartData}
-          style={{
-            data: { stroke: '#1D4ED8', strokeWidth: 2 },
-          }}
+          data = {data?.xAxis.map((d,i) => (
+            {
+              x: d,
+              y: data.yAxis[i]
+            }
+          ))}
+        
         />
 
-        <VictoryScatter
-          animate
-          data={chartData}
-          size={5}
-          style={{ data: { fill: '#1D4ED8' }}}
-          labels={({ datum }) => `(${datum.x}, ${datum.y})`}
+        <VictoryAxis
+          label = {"Y-Axis"}
+          dependentAxis
+          tickValues = {yTickIntervals}
+          tickFormat={(tick) => `${tick}`}
           
+        
         />
       </VictoryChart>
     </ScrollView>
-  );
+  )
+  
 }

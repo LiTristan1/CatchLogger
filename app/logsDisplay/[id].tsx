@@ -64,7 +64,7 @@ export default function LogDisplay() {
 
             {/**display graph showing catch frequency vs month */}
             <Text style={styles.subHeader}>Number of Catches per Month</Text>
-            <Bar data = {exampleData}></Bar>
+            <Bar data = {exampleData} keepXLabel = {true}></Bar>
 
           </>
         ) : (

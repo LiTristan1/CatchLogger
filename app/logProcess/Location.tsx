@@ -13,7 +13,7 @@ type PlacePrediction = {
   place_id: string;
   latitude? : number,
   longitude?: number
-};
+};git 
 //api key for google maps (move to .env file later)
 const apiKey = "AIzaSyBu8tOpbqAfJ9GAJ3owM0WG7DcwVMrCgl4"
 

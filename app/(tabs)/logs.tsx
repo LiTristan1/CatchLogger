@@ -1,5 +1,5 @@
 import {Text,Pressable,ScrollView,StyleSheet} from 'react-native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import {useState,useEffect} from 'react';
 import useFetch from '../../hooks/useFetch';
 import {useSelector, useDispatch} from 'react-redux';
@@ -68,6 +68,7 @@ const displayedObjects = data.slice(0,shown);
                     })
             }
             <Pressable className = 'border-2 border-black' onPress = {showMore}><Text>Show More</Text></Pressable>
+            
         </ScrollView>
     ) : (
         <Text>Loading...</Text>
@@ -83,5 +84,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 24,
         paddingVertical: 24
-    }
+    },
+    background:{
+        position: 'absolute',
+        flex: 1,
+        left: 0,
+        right: 0,
+        top: 0,
+        height: 1000,
+        justifyContent: "center",
+        paddingHorizontal: 16
+    },
+
 });
