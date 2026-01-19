@@ -7,8 +7,6 @@ type Props <T = number | string> = {
     unit: string
     size: number
 }
-//UI component to select the size of the catch
-//very similar to /weatherPicker but has size option for styling 
 export default function SizePicker<T extends number | string>({selectedValue,onValueChange,options,unit,size}: Props<T>){
     const Item: any = Picker.Item;
 
